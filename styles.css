@@ -293,7 +293,10 @@ h1 {
   gap: 2rem;
   padding: 1.25rem;
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.82);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(236, 248, 255, 0.78)),
+    radial-gradient(circle at 18% 16%, rgba(153, 228, 210, 0.24), transparent 10rem),
+    radial-gradient(circle at 88% 22%, rgba(218, 169, 65, 0.16), transparent 9rem);
   border: 1px solid var(--line);
   border-radius: 8px;
   box-shadow: var(--shadow);
@@ -541,8 +544,10 @@ h1 {
   overflow-y: auto;
   padding: clamp(4.8rem, 9vw, 6.8rem) clamp(1rem, 6vw, 7rem);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(238, 248, 255, 0.96)),
-    radial-gradient(circle at 80% 12%, rgba(84, 165, 224, 0.2), transparent 34rem);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(238, 248, 255, 0.96)),
+    radial-gradient(circle at 18% 20%, rgba(153, 228, 210, 0.22), transparent 28rem),
+    radial-gradient(circle at 80% 12%, rgba(84, 165, 224, 0.22), transparent 34rem),
+    radial-gradient(circle at 72% 80%, rgba(218, 169, 65, 0.13), transparent 25rem);
   opacity: 0;
   pointer-events: none;
   transform: scale(1.015);
@@ -562,6 +567,7 @@ h1 {
   inset: 0;
   z-index: -1;
   background-image:
+    radial-gradient(circle at 50% 26%, rgba(255, 255, 255, 0.72), transparent 22rem),
     linear-gradient(rgba(47, 139, 214, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(47, 139, 214, 0.08) 1px, transparent 1px);
   background-size: 4rem 4rem;
@@ -569,9 +575,32 @@ h1 {
 }
 
 .reader-content {
+  position: relative;
   width: min(100%, 48rem);
   margin: auto;
+  padding: clamp(1rem, 3vw, 2rem);
   padding-bottom: 10vh;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.28)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(23, 99, 157, 0.045) 0,
+      rgba(23, 99, 157, 0.045) 1px,
+      transparent 1px,
+      transparent 2.45rem
+    );
+  border-inline: 1px solid rgba(47, 139, 214, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 26px 80px rgba(23, 99, 157, 0.09);
+}
+
+.reader-content::before {
+  position: absolute;
+  inset: 0.8rem;
+  z-index: -1;
+  border: 1px solid rgba(218, 169, 65, 0.16);
+  border-radius: 8px;
+  content: "";
 }
 
 .reader-type {
