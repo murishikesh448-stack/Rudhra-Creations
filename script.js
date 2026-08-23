@@ -96,6 +96,7 @@ const splash = document.querySelector("#splash");
 const openAddForm = document.querySelector("#openAddForm");
 const addModal = document.querySelector("#addModal");
 const addForm = document.querySelector("#addForm");
+const publishButton = document.querySelector("#publishButton");
 const workType = document.querySelector("#workType");
 const workTitle = document.querySelector("#workTitle");
 const workAuthor = document.querySelector("#workAuthor");
@@ -381,16 +382,25 @@ function flashSplash() {
   window.requestAnimationFrame(() => splash.classList.add("is-flashing"));
 }
 
-function openGitHubSubmission(type, title, author, place, content) {
-  const issueTitle = `[Submission] ${type}: ${title}`;
-  const issueBody = `### Type\n${type}\n\n### Title\n${title}\n\n### Author\n${author}\n\n### Place\n${place}\n\n### Content\n${content}`;
-  const params = new URLSearchParams({
-    title: issueTitle,
-    body: issueBody,
-    labels: "publish-submission"
+async function publishOnline(payload) {
+  if (window.location.protocol === "file:") {
+    return { work: null, localOnly: true };
+  }
+
+  const response = await fetch("/.netlify/functions/publish", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
   });
 
-  window.open(`https://github.com/${githubRepo}/issues/new?${params.toString()}`, "_blank", "noopener");
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(result.error || "Could not publish right now.");
+  }
+
+  return result;
 }
 
 function findWork(type, id) {
@@ -412,7 +422,7 @@ addModal.addEventListener("click", (event) => {
   if (event.target.hasAttribute("data-close-modal")) closeModal();
 });
 
-addForm.addEventListener("submit", (event) => {
+addForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const type = workType.value;
@@ -426,7 +436,7 @@ addForm.addEventListener("submit", (event) => {
 
   if (!title || !author || !place || !lines.length) return;
 
-  const newWork = {
+  const pendingWork = {
     id: `${type.toLowerCase()}-${Date.now()}`,
     title,
     author,
@@ -438,21 +448,41 @@ addForm.addEventListener("submit", (event) => {
     isCustom: true
   };
 
-  if (githubRepo) {
-    openGitHubSubmission(type, title, author, place, workContent.value.trim());
+  publishButton.disabled = true;
+  publishButton.textContent = "Publishing...";
+
+  let publishedWork = pendingWork;
+  try {
+    const result = await publishOnline({
+      type,
+      title,
+      author,
+      place,
+      content: workContent.value.trim()
+    });
+    if (result.work) {
+      publishedWork = result.work;
+    }
+  } catch (error) {
+    publishButton.disabled = false;
+    publishButton.textContent = "Publish";
+    window.alert(error.message);
+    return;
   }
 
   if (type === "Poem") {
-    works.poems.unshift(newWork);
+    works.poems.unshift(publishedWork);
   } else {
-    works.stories.unshift(newWork);
+    works.stories.unshift(publishedWork);
   }
 
-  saveCustomWorks();
+  if (publishedWork.isCustom) saveCustomWorks();
   addForm.reset();
   closeModal();
   flashSplash();
   renderAll();
+  publishButton.disabled = false;
+  publishButton.textContent = "Publish";
   document.querySelector(type === "Poem" ? "#poems" : "#stories").scrollIntoView({ behavior: "smooth" });
 });
 
