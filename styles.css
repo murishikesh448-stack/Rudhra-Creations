@@ -58,7 +58,7 @@ textarea {
   z-index: 100;
   display: grid;
   place-items: center;
-  gap: 1rem;
+  padding: 1.5rem;
   color: var(--blue-deep);
   background:
     radial-gradient(circle, rgba(255, 255, 255, 0.96), rgba(238, 248, 255, 0.96)),
@@ -75,15 +75,33 @@ textarea {
   animation: splashPop 780ms ease forwards;
 }
 
+.splash-content {
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.15rem, 3vw, 1.7rem);
+  transform: translateY(-1vh);
+}
+
 .splash p {
-  margin: 13.4rem 0 0;
+  margin: 0;
   font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(1.6rem, 5vw, 3.5rem);
   font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.splash-mark {
+  position: relative;
+  display: grid;
+  width: clamp(8.5rem, 24vw, 15rem);
+  aspect-ratio: 1;
+  place-items: center;
 }
 
 .splash-logo {
-  position: absolute;
+  position: relative;
+  z-index: 2;
   width: clamp(8.5rem, 24vw, 15rem);
   aspect-ratio: 1;
   object-fit: cover;
@@ -97,7 +115,7 @@ textarea {
 
 .splash-ring {
   position: absolute;
-  width: clamp(8rem, 22vw, 15rem);
+  inset: 0;
   aspect-ratio: 1;
   border: 2px solid rgba(47, 139, 214, 0.25);
   border-radius: 50%;
