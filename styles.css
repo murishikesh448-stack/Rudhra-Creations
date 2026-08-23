@@ -76,10 +76,23 @@ textarea {
 }
 
 .splash p {
-  margin: 5.8rem 0 0;
+  margin: 13.4rem 0 0;
   font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(1.6rem, 5vw, 3.5rem);
   font-weight: 700;
+}
+
+.splash-logo {
+  position: absolute;
+  width: clamp(8.5rem, 24vw, 15rem);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid rgba(199, 151, 48, 0.32);
+  border-radius: 50%;
+  box-shadow:
+    0 28px 75px rgba(23, 99, 157, 0.2),
+    0 0 0 0.75rem rgba(255, 255, 255, 0.58);
+  animation: splashLogo 1.25s ease both;
 }
 
 .splash-ring {
@@ -119,15 +132,13 @@ nav {
   font-weight: 700;
 }
 
-.brand-mark {
-  display: grid;
-  width: 2rem;
-  height: 2rem;
-  place-items: center;
-  color: var(--white);
-  background: linear-gradient(135deg, #78bff2, #17639d);
+.brand-logo {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  border: 1px solid rgba(199, 151, 48, 0.36);
   border-radius: 50%;
-  font-family: "Playfair Display", serif;
+  box-shadow: 0 8px 22px rgba(23, 99, 157, 0.14);
 }
 
 nav {
@@ -151,6 +162,19 @@ nav a:hover {
 
 .hero-copy {
   max-width: 48rem;
+}
+
+.hero-logo {
+  width: clamp(7.5rem, 18vw, 12.5rem);
+  aspect-ratio: 1;
+  object-fit: cover;
+  margin-bottom: 1.3rem;
+  border: 1px solid rgba(199, 151, 48, 0.28);
+  border-radius: 50%;
+  box-shadow:
+    0 24px 70px rgba(23, 99, 157, 0.18),
+    0 0 0 0.7rem rgba(255, 255, 255, 0.56);
+  animation: logoReveal 760ms ease both;
 }
 
 .eyebrow {
@@ -625,6 +649,28 @@ h1 {
   to {
     opacity: 0;
     transform: scale(1.28);
+  }
+}
+
+@keyframes logoReveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.8rem) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes splashLogo {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
   }
 }
 
