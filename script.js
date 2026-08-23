@@ -387,13 +387,18 @@ async function publishOnline(payload) {
     return { work: null, localOnly: true };
   }
 
-  const response = await fetch("/.netlify/functions/publish", {
+  const requestOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(payload)
-  });
+  };
+
+  let response = await fetch("/api/publish", requestOptions);
+  if (response.status === 404) {
+    response = await fetch("/.netlify/functions/publish", requestOptions);
+  }
 
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
