@@ -1,0 +1,73 @@
+{
+  "poems": [
+    {
+      "id": "poem-blue-silence",
+      "title": "Blue Silence",
+      "date": "Poem",
+      "readTime": "2 min read",
+      "excerpt": "A soft opening poem for evenings, rain, and the quiet after a thought.",
+      "body": [
+        "The sky folds itself into a bowl of blue,",
+        "and I place my tired heart inside it.",
+        "No thunder asks for my answer tonight,",
+        "only the window, breathing white light.",
+        "Somewhere a flute remembers the river,",
+        "somewhere the moon learns my name.",
+        "I become less storm, more shore,",
+        "less hurry, more flame."
+      ]
+    },
+    {
+      "id": "poem-after-the-rain",
+      "title": "After the Rain",
+      "date": "Poem",
+      "readTime": "1 min read",
+      "excerpt": "A gentle piece about new beginnings after a heavy day.",
+      "body": [
+        "After the rain, even the road looks forgiven.",
+        "Leaves hold small mirrors to the morning.",
+        "I walk slowly, as if the world might speak,",
+        "as if every puddle has kept a secret for me."
+      ]
+    },
+    {
+      "id": "poem-paper-boat",
+      "title": "Paper Boat",
+      "date": "Poem",
+      "readTime": "2 min read",
+      "excerpt": "A small dream set afloat on calm water.",
+      "body": [
+        "I made a boat from a page I could not finish,",
+        "creased it with hope, sent it into rainwater.",
+        "It did not know the ocean.",
+        "Still, it moved like it believed."
+      ]
+    }
+  ],
+  "stories": [
+    {
+      "id": "story-the-lantern-keeper",
+      "title": "The Lantern Keeper",
+      "date": "Story",
+      "readTime": "4 min read",
+      "excerpt": "A quiet fantasy about a village that saves its memories in blue lanterns.",
+      "body": [
+        "Every evening, Aran lit the lanterns before the first star appeared. The village said the lamps kept darkness away, but Aran knew the older truth: each flame carried a memory someone was afraid to lose.",
+        "One night, a lantern burned white instead of blue. Inside it, he saw a road, a letter, and a girl laughing beside the sea. By morning, the whole village had gathered to ask whose memory had returned.",
+        "Aran did not answer quickly. Some memories arrive like guests. Some arrive like rain. This one arrived like a door."
+      ]
+    },
+    {
+      "id": "story-a-house-made-of-wind",
+      "title": "A House Made of Wind",
+      "date": "Story",
+      "readTime": "3 min read",
+      "excerpt": "A reflective short story about home, distance, and the things we carry.",
+      "body": [
+        "The old house had no walls by the time Mira returned, only four stone corners and the smell of jasmine after sunset.",
+        "She stood where the kitchen used to be and listened. The wind moved through the empty rooms as if it still knew where everything belonged.",
+        "Mira smiled. Some homes are not built to remain. Some are built to follow."
+      ]
+    }
+  ]
+}
