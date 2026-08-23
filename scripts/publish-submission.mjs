@@ -40,6 +40,8 @@ function makeExcerpt(lines) {
 
 const type = getField("Type");
 const title = getField("Title");
+const author = getField("Author");
+const place = getField("Place");
 const content = getField("Content");
 const lines = content.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
 
@@ -47,8 +49,8 @@ if (!["Poem", "Story"].includes(type)) {
   throw new Error("Type must be Poem or Story.");
 }
 
-if (!title || lines.length === 0) {
-  throw new Error("Title and content are required.");
+if (!title || !author || !place || lines.length === 0) {
+  throw new Error("Title, author, place, and content are required.");
 }
 
 const works = JSON.parse(readFileSync(worksPath, "utf8"));
@@ -65,6 +67,8 @@ while (collection.some((item) => item.id === id)) {
 collection.unshift({
   id,
   title,
+  author,
+  place,
   date: type,
   readTime: estimateReadTime(lines),
   excerpt: makeExcerpt(lines),

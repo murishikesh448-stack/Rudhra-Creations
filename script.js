@@ -98,6 +98,8 @@ const addModal = document.querySelector("#addModal");
 const addForm = document.querySelector("#addForm");
 const workType = document.querySelector("#workType");
 const workTitle = document.querySelector("#workTitle");
+const workAuthor = document.querySelector("#workAuthor");
+const workPlace = document.querySelector("#workPlace");
 const workContent = document.querySelector("#workContent");
 const reader = document.querySelector("#reader");
 const readerType = document.querySelector("#readerType");
@@ -192,7 +194,7 @@ function getFilteredWorks() {
   const query = searchInput.value.trim().toLowerCase();
   const filter = (item) => {
     if (!query) return true;
-    const searchable = `${item.title} ${item.excerpt} ${item.body.join(" ")}`.toLowerCase();
+    const searchable = `${item.title} ${item.author || ""} ${item.place || ""} ${item.excerpt} ${item.body.join(" ")}`.toLowerCase();
     return searchable.includes(query);
   };
 
@@ -214,6 +216,7 @@ function renderCards(items, container, type) {
               <span>${escapeHtml(item.readTime)}</span>
             </span>
             <h3>${escapeHtml(item.title)}</h3>
+            <p class="byline">${escapeHtml(formatAuthorPlace(item))}</p>
             <p>${escapeHtml(item.excerpt)}</p>
           </span>
           <span class="card-meta">
@@ -244,6 +247,15 @@ function renderCreations() {
       `
     )
     .join("");
+}
+
+function formatAuthorPlace(item) {
+  const author = item.author?.trim();
+  const place = item.place?.trim();
+  if (author && place) return `By ${author} from ${place}`;
+  if (author) return `By ${author}`;
+  if (place) return `From ${place}`;
+  return "By Rudhra Creations";
 }
 
 function renderAll() {
@@ -335,7 +347,7 @@ function stopMusic() {
 function openReader(item, type) {
   readerType.textContent = type;
   readerTitle.textContent = item.title;
-  readerMeta.textContent = `${item.date} - ${item.readTime}`;
+  readerMeta.textContent = `${formatAuthorPlace(item)} - ${item.date} - ${item.readTime}`;
   readerBody.innerHTML = item.body.map((line) => `<p>${escapeHtml(line)}</p>`).join("");
   reader.classList.add("is-open");
   reader.setAttribute("aria-hidden", "false");
@@ -369,9 +381,9 @@ function flashSplash() {
   window.requestAnimationFrame(() => splash.classList.add("is-flashing"));
 }
 
-function openGitHubSubmission(type, title, content) {
+function openGitHubSubmission(type, title, author, place, content) {
   const issueTitle = `[Submission] ${type}: ${title}`;
-  const issueBody = `### Type\n${type}\n\n### Title\n${title}\n\n### Content\n${content}`;
+  const issueBody = `### Type\n${type}\n\n### Title\n${title}\n\n### Author\n${author}\n\n### Place\n${place}\n\n### Content\n${content}`;
   const params = new URLSearchParams({
     title: issueTitle,
     body: issueBody,
@@ -405,16 +417,20 @@ addForm.addEventListener("submit", (event) => {
 
   const type = workType.value;
   const title = workTitle.value.trim();
+  const author = workAuthor.value.trim();
+  const place = workPlace.value.trim();
   const lines = workContent.value
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
 
-  if (!title || !lines.length) return;
+  if (!title || !author || !place || !lines.length) return;
 
   const newWork = {
     id: `${type.toLowerCase()}-${Date.now()}`,
     title,
+    author,
+    place,
     date: type,
     readTime: estimateReadTime(lines),
     excerpt: makeExcerpt(lines),
@@ -423,7 +439,7 @@ addForm.addEventListener("submit", (event) => {
   };
 
   if (githubRepo) {
-    openGitHubSubmission(type, title, workContent.value.trim());
+    openGitHubSubmission(type, title, author, place, workContent.value.trim());
   }
 
   if (type === "Poem") {
